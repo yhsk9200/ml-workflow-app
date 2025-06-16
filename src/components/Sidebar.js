@@ -45,13 +45,6 @@ export default function Sidebar() {
           );
         })}
       </div>
-      
-      {/* 테스트용 버튼 */}
-      <div className="mt-4 p-2 bg-yellow-100 rounded">
-        <p className="text-xs text-gray-600">
-          드래그가 안되면 브라우저 콘솔(F12)에서 메시지를 확인하세요.
-        </p>
-      </div>
     </aside>
   );
 }

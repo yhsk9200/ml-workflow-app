@@ -1,18 +1,34 @@
 import React from 'react';
 import { Handle, Position } from 'reactflow';
-import { Database } from 'lucide-react';
+
+const getSourceIcon = (sourceType) => {
+  switch (sourceType) {
+    case 'fileUpload':
+      return '📄'; // File icon
+    case 'dbConnection':
+      return '🗄️'; // Database icon
+    case 'filePath':
+    default:
+      return '📁'; // Folder icon for file path
+  }
+};
 
 export default function DataInputNode({ data }) {
   return (
-    <div className="px-4 py-2 shadow-md rounded-md bg-blue-100 border-2 border-blue-300">
-      <div className="flex items-center">
-        <Database className="w-4 h-4 mr-2" />
-        <div className="ml-2">
-          <div className="text-lg font-bold">{data.label}</div>
-          <div className="text-gray-500">{data.description}</div>
+    <div className="w-48 shadow-lg rounded-md overflow-hidden bg-white border-2 border-indigo-500">
+      <div className="p-2 bg-indigo-500 text-white text-sm">
+        Data Input
+      </div>
+      <div className="p-3">
+        <div className="flex items-center">
+          <div className="text-3xl mr-3">{getSourceIcon(data.sourceType)}</div>
+          <div>
+            <div className="text-sm font-bold text-gray-800">{data.label}</div>
+            <p className="text-xs text-gray-500">{data.description}</p>
+          </div>
         </div>
       </div>
-      <Handle type="source" position={Position.Right} />
+      <Handle type="source" position={Position.Right} className="w-3 h-3 !bg-indigo-500" />
     </div>
   );
 }
