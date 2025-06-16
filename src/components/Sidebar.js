@@ -1,5 +1,5 @@
 import React from 'react';
-import { Database, Settings, Brain, BarChart3, Save } from 'lucide-react';
+import { Database, Settings, Brain, BarChart3 } from 'lucide-react';
 
 const nodeTypes = [
   { type: 'dataInput', label: 'Data Input', icon: Database, color: 'bg-blue-100' },
@@ -10,14 +10,20 @@ const nodeTypes = [
 
 export default function Sidebar() {
   const onDragStart = (event, nodeType) => {
+    console.log('Drag start:', nodeType); // 디버깅용
     event.dataTransfer.setData('application/reactflow', nodeType);
     event.dataTransfer.effectAllowed = 'move';
+  };
+
+  const onDragEnd = (event) => {
+    console.log('Drag end'); // 디버깅용
   };
 
   return (
     <aside className="w-64 bg-gray-100 p-4 border-r">
       <div className="mb-4">
         <h2 className="text-lg font-semibold mb-2">ML/DL Components</h2>
+        <p className="text-sm text-gray-600">Drag items to canvas</p>
       </div>
       
       <div className="space-y-2">
@@ -26,8 +32,9 @@ export default function Sidebar() {
           return (
             <div
               key={node.type}
-              className={`${node.color} p-3 rounded-md cursor-move border-2 border-dashed border-gray-300 hover:border-gray-400`}
+              className={`${node.color} p-3 rounded-md cursor-move border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors`}
               onDragStart={(event) => onDragStart(event, node.type)}
+              onDragEnd={onDragEnd}
               draggable
             >
               <div className="flex items-center">
@@ -37,6 +44,13 @@ export default function Sidebar() {
             </div>
           );
         })}
+      </div>
+      
+      {/* 테스트용 버튼 */}
+      <div className="mt-4 p-2 bg-yellow-100 rounded">
+        <p className="text-xs text-gray-600">
+          드래그가 안되면 브라우저 콘솔(F12)에서 메시지를 확인하세요.
+        </p>
       </div>
     </aside>
   );
